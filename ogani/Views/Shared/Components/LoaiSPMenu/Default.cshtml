@@ -1,0 +1,33 @@
+﻿@using ogani.Models
+@model IEnumerable<TLoaiSp>
+
+@foreach ( var item in Model)
+{
+    var getUrl = "https://localhost:7083/api/DanhSachSanPham/" + item.MaLoai.Trim();
+    <li><a style= "cursor: pointer" onclick="laySanPhamTheoLoai('@getUrl')">@item.Loai</a></li>
+}
+
+<script>
+    function laySanPhamTheoLoai(getUrl) {
+        var str = '';
+
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            dataType: 'json',
+
+            success: function(data) {
+                $.each(data, function(k, v) {
+                    str += `<p>${v.tenSp}</p>`;
+                });
+
+                $('#danhSachSanPham').html(str);
+            },
+
+            error: function(error) {
+                alert("Lỗi: " + error);
+            }
+        });
+    }
+</script>
+</script>
